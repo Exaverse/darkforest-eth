@@ -34,6 +34,14 @@ export const target4Initializers = settings.parse(decodeInitializers, {
   SPAWN_RIM_AREA: 7234560000,
 });
 
+const harnessUpgradeablePlanets: [boolean, boolean, boolean, boolean, boolean] = [true, true, false, false, false];
+
+export const customUpgradeInitializers = {
+  ...initializers,
+  UPGRADEABLE_PLANETS: harnessUpgradeablePlanets,
+// We're adding the ability to upgrade asteroids!
+}
+
 export const VALID_INIT_PERLIN = initializers.INIT_PERLIN_MIN;
 export const NEBULA_PERLIN = initializers.PERLIN_THRESHOLD_1 - 1;
 export const SPACE_PERLIN = initializers.PERLIN_THRESHOLD_1;

@@ -201,7 +201,7 @@ library LibPlanet {
         uint256 planetLevel = planet.planetLevel;
         require(planetLevel > 0, "Planet level is not high enough for this upgrade");
         require(_branch < 3, "Upgrade branch not valid");
-        require(planet.planetType == PlanetType.PLANET, "Can only upgrade regular planets");
+        require(gameConstants().UPGRADEABLE_PLANETS[uint256(planet.planetType)], "Can only upgrade allowed planet types");
         require(!info.destroyed, "planet is destroyed");
 
         uint256 totalLevel = info.upgradeState0 + info.upgradeState1 + info.upgradeState2;

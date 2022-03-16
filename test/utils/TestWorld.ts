@@ -57,6 +57,15 @@ export function noPlanetTransferFixture(): Promise<World> {
   });
 }
 
+import { customUpgradeInitializers } from './WorldConstants';
+
+export function customUpgradeWorldFixture(): Promise<World> {
+  return initializeWorld({
+    initializers: customUpgradeInitializers,
+    whitelistEnabled: false,
+  });
+}
+
 export async function initializeWorld({
   initializers,
   whitelistEnabled,
