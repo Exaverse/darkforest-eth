@@ -76,6 +76,7 @@ const xdai = {
   },
   chainId: 100,
   gasMultiplier: 5,
+  timeout: 120000,
 };
 
 // The mainnet config, but it isn't added to networks unless we have a DEPLOYER_MNEMONIC
