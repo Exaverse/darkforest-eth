@@ -121,18 +121,29 @@ describe('DarkForestUpgrade', function () {
     await feedSilverToCap(world, world.user1Core, LVL1_ASTEROID_2, LVL1_QUASAR);
     await increaseBlockchainTime(); // fills up LVL1_ASTEROID_2
 
-    await expect(world.user1Core.upgradePlanet(LVL1_ASTEROID_2.id, 0)).to.be.revertedWith(
-      'Can only upgrade regular planets'
-    );
-    await expect(world.user1Core.upgradePlanet(LVL3_SPACETIME_1.id, 0)).to.be.revertedWith(
-      'Can only upgrade regular planets'
-    );
-    await expect(world.user1Core.upgradePlanet(ARTIFACT_PLANET_1.id, 0)).to.be.revertedWith(
-      'Can only upgrade regular planets'
-    );
-    await expect(world.user1Core.upgradePlanet(LVL1_QUASAR.id, 0)).to.be.revertedWith(
-      'Can only upgrade regular planets'
-    );
+    const upgradeablePlanets = (await world.contract.getGameConstants()).UPGRADEABLE_PLANETS;
+    enum PlanetType {PLANET, ASTEROID, FOUNDRY, RIP, QUASAR};
+
+    if (!upgradeablePlanets[PlanetType.ASTEROID]) {
+      await expect(world.user1Core.upgradePlanet(LVL1_ASTEROID_2.id, 0)).to.be.revertedWith(
+        'Can only upgrade allowed planet types'
+      );
+    }
+    if (!upgradeablePlanets[PlanetType.RIP]) {
+      await expect(world.user1Core.upgradePlanet(LVL3_SPACETIME_1.id, 0)).to.be.revertedWith(
+        'Can only upgrade allowed planet types'
+      );
+    }
+    if (!upgradeablePlanets[PlanetType.FOUNDRY]) {
+      await expect(world.user1Core.upgradePlanet(ARTIFACT_PLANET_1.id, 0)).to.be.revertedWith(
+        'Can only upgrade allowed planet types'
+      );
+    }
+    if (!upgradeablePlanets[PlanetType.QUASAR]) {
+      await expect(world.user1Core.upgradePlanet(LVL1_QUASAR.id, 0)).to.be.revertedWith(
+        'Can only upgrade allowed planet types'
+      );
+    }
   });
 
   it("should reject upgrade if there's not enough resources", async function () {
