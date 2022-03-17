@@ -55,6 +55,7 @@ extendEnvironment((env: HardhatRuntimeEnvironment) => {
   });
 
   env.initializers = lazyObject(() => {
+    console.log('HELLO!!')
     const { initializers = {} } = settings.load(env.network.name);
     return settings.parse(decodeInitializers, initializers);
   });
