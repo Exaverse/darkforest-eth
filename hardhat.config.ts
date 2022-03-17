@@ -55,11 +55,9 @@ extendEnvironment((env: HardhatRuntimeEnvironment) => {
   });
 
   env.initializers = lazyObject(() => {
-    console.log('HELLO!! sup')
+    console.log('HELLO!! sup');
     const { initializers = {} } = settings.load(env.network.name);
-    const stuff = settings.parse(decodeInitializers, initializers);
-    console.log('STUFF IS ', stuff);
-    return stuff;
+    return settings.parse(decodeInitializers, initializers);
   });
 
   env.adminPlanets = lazyObject(() => {
@@ -75,7 +73,7 @@ const xdai = {
     mnemonic: DEPLOYER_MNEMONIC,
   },
   chainId: 100,
-  gasMultiplier: 5,
+  gasMultiplier: 12,
   timeout: 120000,
 };
 
