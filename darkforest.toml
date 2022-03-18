@@ -11,7 +11,7 @@ WORLD_RADIUS_MIN = 12_000
 ##################################
 # SNARK keys & Perlin parameters #
 ##################################
-DISABLE_ZK_CHECKS = false
+DISABLE_ZK_CHECKS = true
 PLANETHASH_KEY = 115
 SPACETYPE_KEY = 116
 BIOMEBASE_KEY = 117
@@ -144,14 +144,6 @@ PLANET_TYPE_WEIGHTS = [
 ##########################
 # Planets to add to game #
 ##########################
-# Add lvl9 admin planet at (0,0)
-[[planets]]
-  x = 0
-  y = 0
-  level = 9
-  planetType = 0
-  requireValidLocationId = false
-  revealLocation = true
 
 # Corresponds to [Planet, Asteroid, Foundry, Rip, Quasar]
 UPGRADEABLE_PLANETS = [true, true, false, false, false]
