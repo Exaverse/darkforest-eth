@@ -200,6 +200,12 @@ async function saveDeploy(
   );
 }
 
+const STUPID_WAIT_TIME = 30000;
+const stupidWait = async (): Promise<void> => {
+  await new Promise(resolve => setTimeout(resolve, STUPID_WAIT_TIME));
+  console.log('done waiting xD');
+}
+
 export async function deployAndCut(
   {
     ownerAddress,
@@ -217,12 +223,16 @@ export async function deployAndCut(
   const changes = new DiamondChanges();
 
   const libraries = await deployLibraries({}, hre);
+  await stupidWait();
 
   // Diamond Spec facets
   // Note: These won't be updated during an upgrade without manual intervention
   const diamondCutFacet = await deployDiamondCutFacet({}, libraries, hre);
+  await stupidWait();
   const diamondLoupeFacet = await deployDiamondLoupeFacet({}, libraries, hre);
+  await stupidWait();
   const ownershipFacet = await deployOwnershipFacet({}, libraries, hre);
+  await stupidWait();
 
   // The `cuts` to perform for Diamond Spec facets
   const diamondSpecFacetCuts = [
@@ -240,22 +250,32 @@ export async function deployAndCut(
     libraries,
     hre
   );
+  await stupidWait();
 
   const diamondInit = await deployDiamondInit({}, libraries, hre);
+  await stupidWait();
 
   // Dark Forest facets
   const coreFacet = await deployCoreFacet({}, libraries, hre);
+  await stupidWait();
   const moveFacet = await deployMoveFacet({}, libraries, hre);
+  await stupidWait();
   const captureFacet = await deployCaptureFacet({}, libraries, hre);
+  await stupidWait();
   const artifactFacet = await deployArtifactFacet(
     { diamondAddress: diamond.address },
     libraries,
     hre
   );
+  await stupidWait();
   const getterFacet = await deployGetterFacet({}, libraries, hre);
+  await stupidWait();
   const whitelistFacet = await deployWhitelistFacet({}, libraries, hre);
+  await stupidWait();
   const adminFacet = await deployAdminFacet({}, libraries, hre);
+  await stupidWait();
   const lobbyFacet = await deployLobbyFacet({}, {}, hre);
+  await stupidWait();
 
   // The `cuts` to perform for Dark Forest facets
   const darkForestFacetCuts = [
@@ -293,6 +313,7 @@ export async function deployAndCut(
 
   const initTx = await diamondCut.diamondCut(toCut, initAddress, initFunctionCall);
   const initReceipt = await initTx.wait();
+  await stupidWait();
   if (!initReceipt.status) {
     throw Error(`Diamond cut failed: ${initTx.hash}`);
   }
@@ -355,14 +376,17 @@ export async function deployLibraries({}, hre: HardhatRuntimeEnvironment) {
   const VerifierFactory = await hre.ethers.getContractFactory('Verifier');
   const Verifier = await VerifierFactory.deploy();
   await Verifier.deployTransaction.wait();
+  await stupidWait();
 
   const LibGameUtilsFactory = await hre.ethers.getContractFactory('LibGameUtils');
   const LibGameUtils = await LibGameUtilsFactory.deploy();
   await LibGameUtils.deployTransaction.wait();
+  await stupidWait();
 
   const LibLazyUpdateFactory = await hre.ethers.getContractFactory('LibLazyUpdate');
   const LibLazyUpdate = await LibLazyUpdateFactory.deploy();
   await LibLazyUpdate.deployTransaction.wait();
+  await stupidWait();
 
   const LibArtifactUtilsFactory = await hre.ethers.getContractFactory('LibArtifactUtils', {
     libraries: {
@@ -372,6 +396,7 @@ export async function deployLibraries({}, hre: HardhatRuntimeEnvironment) {
 
   const LibArtifactUtils = await LibArtifactUtilsFactory.deploy();
   await LibArtifactUtils.deployTransaction.wait();
+  await stupidWait();
 
   const LibPlanetFactory = await hre.ethers.getContractFactory('LibPlanet', {
     libraries: {
@@ -382,6 +407,7 @@ export async function deployLibraries({}, hre: HardhatRuntimeEnvironment) {
   });
   const LibPlanet = await LibPlanetFactory.deploy();
   await LibPlanet.deployTransaction.wait();
+  await stupidWait();
 
   return {
     LibGameUtils: LibGameUtils.address,

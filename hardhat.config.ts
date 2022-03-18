@@ -73,7 +73,8 @@ const xdai = {
     mnemonic: DEPLOYER_MNEMONIC,
   },
   chainId: 100,
-  gasMultiplier: 25,
+  //gasMultiplier: 50,
+  gasPrice: 7000000000,
   timeout: 120000,
 };
 
